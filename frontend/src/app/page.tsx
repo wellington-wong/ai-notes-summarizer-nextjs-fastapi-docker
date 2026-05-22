@@ -1,4 +1,133 @@
-import Image from "next/image";
+'use client'
+import { useEffect, useState } from 'react'
+
+
+
+import {
+  createNote,
+  getNotes,
+  summarizeNote,
+} from './services/api'
+
+import { Note } from './types/note'
+export default function Home() {
+  const [content, setContent] = useState<string>('')
+  const [notes, setNotes] = useState<Note[]>([])
+
+  const loadNotes = async () => {
+    const data = await getNotes()
+    setNotes(data)
+  }
+
+  useEffect(() => {
+    loadNotes()
+  }, [])
+
+  const handleCreate = async () => {
+    if (!content.trim()) return
+
+    await createNote(content)
+
+    setContent('')
+    loadNotes()
+  }
+
+  const handleSummarize = async (
+    id: number
+  ) => {
+    await summarizeNote(id)
+    loadNotes()
+  }
+
+  return (
+    <div className="container">
+
+      <h1>AI Notes App</h1>
+
+      <textarea
+        placeholder="Write your note..."
+        value={content}
+        onChange={(e) => {
+          setContent(e.target.value)
+        }}
+      />
+
+        <button onClick={handleCreate}>
+          Save Note
+        </button>
+
+        {notes.map((note) => (
+          <div className="note" key={note.id}>
+            <h3>Note</h3>
+
+            <p>{note.content}</p>
+
+            <button onClick={() => 
+                handleSummarize(note.id)
+              }
+            >
+              Summarize with AI
+            </button>
+
+            {note.summary && (
+              <>
+                <h5>Summary</h5>
+                <p>{note.summary}</p>
+              </>
+            )}
+          </div>
+        ))}
+    </div>
+  )
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*import Image from "next/image";
 
 export default function Home() {
   return (
@@ -63,3 +192,4 @@ export default function Home() {
     </div>
   );
 }
+*/

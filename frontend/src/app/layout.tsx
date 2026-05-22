@@ -1,4 +1,60 @@
-import type { Metadata } from "next";
+import './globals.css'
+import { ReactNode } from 'react'
+
+
+
+export const metadata = {
+  title: 'AI Notes App',
+  description: 'Simple AI Notes App',
+}
+
+interface Props {
+  children: ReactNode
+}
+
+export default function RootLayout({
+  children,
+}: Props) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -31,3 +87,4 @@ export default function RootLayout({
     </html>
   );
 }
+*/
