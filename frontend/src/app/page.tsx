@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <div className="container">
 
-      <h1>AI Notes App</h1>
+      <h1>AI Notes Summarizer</h1>
 
       <textarea
         placeholder="Write your note..."
