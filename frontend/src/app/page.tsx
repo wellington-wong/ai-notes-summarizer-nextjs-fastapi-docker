@@ -56,18 +56,11 @@ export default function Home() {
           Save Note
         </button>
 
-        {notes.map((note) => (
+        {notes.reverse().map((note) => (
           <div className="note" key={note.id}>
             <h3>Note</h3>
 
             <p>{note.content}</p>
-
-            <button onClick={() => 
-                handleSummarize(note.id)
-              }
-            >
-              Summarize with AI
-            </button>
 
             {note.summary && (
               <>
@@ -75,6 +68,13 @@ export default function Home() {
                 <p>{note.summary}</p>
               </>
             )}
+
+            {!note.summary&&<button onClick={() => 
+                handleSummarize(note.id)
+              }
+            >
+              Summarize with AI
+            </button>}
           </div>
         ))}
     </div>

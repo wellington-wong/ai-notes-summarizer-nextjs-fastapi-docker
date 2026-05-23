@@ -3,7 +3,7 @@ import { Note } from '../types/note'
 
 
 
-const API = 'http://localhost:8000'
+const API = process.env.NEXT_PUBLIC_API
 
 export const getNotes = async (): Promise<Note[]> => {
 	const res = await axios.get(`${API}/notes`)
