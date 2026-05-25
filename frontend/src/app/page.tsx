@@ -1,7 +1,6 @@
 'use client'
+
 import { useEffect, useState } from 'react'
-
-
 
 import {
   createNote,
@@ -13,10 +12,11 @@ import { Note } from './types/note'
 export default function Home() {
   const [content, setContent] = useState<string>('')
   const [notes, setNotes] = useState<Note[]>([])
+  const [buttonText, setButtonText] = useState('Summarize with AI')
 
   const loadNotes = async () => {
     const data = await getNotes()
-    setNotes(data)
+    setNotes(data.reverse())
   }
 
   useEffect(() => {
@@ -25,7 +25,6 @@ export default function Home() {
 
   const handleCreate = async () => {
     if (!content.trim()) return
-
     await createNote(content)
 
     setContent('')
@@ -35,6 +34,7 @@ export default function Home() {
   const handleSummarize = async (
     id: number
   ) => {
+    setButtonText("Thinking...")
     await summarizeNote(id)
     loadNotes()
   }
@@ -56,7 +56,7 @@ export default function Home() {
           Save Note
         </button>
 
-        {notes.reverse().map((note) => (
+        {notes.map((note) => (
           <div className="note" key={note.id}>
             <h3>Note</h3>
 
@@ -73,7 +73,7 @@ export default function Home() {
                 handleSummarize(note.id)
               }
             >
-              Summarize with AI
+              {buttonText}
             </button>}
           </div>
         ))}
