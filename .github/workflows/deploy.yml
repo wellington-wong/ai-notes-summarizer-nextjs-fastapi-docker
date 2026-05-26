@@ -6,6 +6,10 @@ on:
     branches:
       - master
 
+concurrency:
+  group: production-deploy
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -25,7 +29,10 @@ jobs:
       - name: Copy files to server
         run: |
           rsync -avz --delete \
+            --exclude '.env' \
             --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'frontend' \
             --exclude 'node_modules' \
             -e "ssh -i ~/.ssh/id_ed25519" \
             ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/apps/notes-app
@@ -36,10 +43,18 @@ jobs:
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
             cd ~/apps/notes-app
 
+
             printf "OPENAI_API_KEY=%s\nPOSTGRES_PASSWORD=%s\n" \
             "${{ secrets.OPENAI_API_KEY }}" \
             "${{ secrets.POSTGRES_PASSWORD }}" > .env
-            docker compose -f docker-compose.prod.yml up -d --build
+
+            chmod 600 .env
+
+            docker compose -f docker-compose.prod.yml up -d --build backend
+          
+            sleep 5
+
+            curl --fail http://localhost:8000 || exit 1
           EOF
 
 
