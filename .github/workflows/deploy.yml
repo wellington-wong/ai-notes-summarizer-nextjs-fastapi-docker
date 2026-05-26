@@ -54,6 +54,7 @@ jobs:
           
             sleep 5
 
+            docker compose -f docker-compose.prod.yml exec -T backend \
             curl --fail http://localhost:8000 || exit 1
           EOF
 

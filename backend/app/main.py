@@ -83,3 +83,7 @@ def summarize_note(note_id: int):
 	db.close()
 
 	return note
+
+@app.get("/health")
+def health():
+	return {"status": "ok"}
