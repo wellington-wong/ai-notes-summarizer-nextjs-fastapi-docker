@@ -40,4 +40,6 @@ jobs:
             "${{ secrets.OPENAI_API_KEY }}" \
             "${{ secrets.POSTGRES_PASSWORD }}" > .env
             docker compose -f docker-compose.prod.yml up -d --build
-EOF
+          EOF
+
+
