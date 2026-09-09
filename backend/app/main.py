@@ -6,11 +6,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from .ai import summarize_text
-from .database import Base
-from .database import engine
-from .database import SessionLocal
+from .database import Base, engine, SessionLocal
+
 from .models import Note
 from .schemas import NoteCreate
+from .routers.auth import router as auth_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,11 +18,15 @@ app = FastAPI()
 
 app.add_middleware(
 	CORSMiddleware,
-	allow_origins=["*"],
+	allow_origins=["http://127.0.0.1:3000", "https://summarizer.wellington.codes"],
 	allow_credentials=True,
 	allow_methods=["*"],
 	allow_headers=["*"],
 )
+
+
+app.include_router(auth_router)
+
 
 @app.get("/")
 def root():

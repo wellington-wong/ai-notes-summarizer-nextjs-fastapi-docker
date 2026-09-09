@@ -5,3 +5,6 @@ sqlalchemy
 psycopg2-binary
 python-dotenv
 openai
+
+argon2-cffi
+email-validator
