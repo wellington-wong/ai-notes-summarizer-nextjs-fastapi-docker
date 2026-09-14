@@ -10,9 +10,16 @@ import { EventsModule } from './events/events.module.js';
 import { MetricsModule } from './metrics/metrics.module.js';
 import { AlertsModule } from './alerts/alerts.module.js';
 import { HealthModule } from './health/health.module.js';
+import { ConfigModule } from '@nestjs/config';
+
+
+import configuration from './config/configuration.js';
+import { validationSchema } from './config/validation.js';
+import { PrismaModule } from './prisma/prisma.module.js';
+import { SystemModule } from './system/system.module.js';
+import { DockerModule } from './docker/docker.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
-
 @Module({
   imports: [
     // Distributed tracing, auto-correlated logs, request/job metrics, error
@@ -22,6 +29,11 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       appSecret: 'YOUR_APP_SECRET',
       serviceId: 'observability',
     }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+      validationSchema,
+    }),
     AuthModule,
     UsersModule,
     ProjectsModule,
@@ -30,6 +42,9 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
     MetricsModule,
     AlertsModule,
     HealthModule,
+    PrismaModule,
+    SystemModule,
+    DockerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
