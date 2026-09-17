@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import * as os from 'node:os';
 
+import { statfs } from 'node:fs/promises';
 
 interface CpuSnapshot {
   idle: number;
@@ -12,7 +13,7 @@ interface CpuSnapshot {
 export class SystemMetricsService {
   private previousCpuSnapshot: CpuSnapshot | null = null;
 
-  getMetrics() {
+  async getMetrics() {
     const currentCpuSnapshot = this.getCpuSnapshot();
 
     const cpuUsagePercent = this.calculateCpuUsage(
@@ -26,6 +27,8 @@ export class SystemMetricsService {
     const freeMemory = os.freemem();
     const usedMemory = totalMemory - freeMemory;
 
+    const disk = await this.getDiskMetrics();
+
     return {
       cpu: {
         usagePercent: cpuUsagePercent,
@@ -35,9 +38,11 @@ export class SystemMetricsService {
         totalBytes: totalMemory,
         freeBytes: freeMemory,
         usedBytes: usedMemory,
-        usagePercent: (usedMemory / totalMemory) * 100,
+        usagePercent: Number((usedMemory / totalMemory) * 100).toFixed(2),
       },
-      uptimeSeconds: os.uptime(),
+
+      disk,
+      uptimeSeconss: os.uptime(),
     };
   }
 
@@ -82,5 +87,24 @@ export class SystemMetricsService {
     const usage = 1 - idleDelta / totalDelta;
 
     return Number((usage * 100).toFixed(2));
+  }
+
+  private async getDiskMetrics() {
+    const stats = await statfs('/');
+
+    const totalBytes = stats.blocks * stats.bsize;
+    const freeBytes = stats.bfree * stats.bsize;
+
+    const availableBytes = stats.bavail * stats.bsize;
+    const usedBytes = totalBytes - freeBytes;
+
+    return {
+      totalBytes,
+      usedBytes,
+      freeBytes,
+      availableBytes,
+
+      usagePercent: Number(((usedBytes / totalBytes) * 100).toFixed(2)),
+    };
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { DockerService } from './docker.service.js';
 
 
@@ -12,4 +12,13 @@ export class DockerController {
     return this.dockerService.getContainers();
   }
 
+  @Get('containers/:id/stats')
+  getContainerStats(@Param('id') id: string) {
+    return this.dockerService.getContainerStats(id);
+  }
+
+  @Get('containers/:id/metrics')
+  getContainerMetrics(@Param('id') id: string) {
+    return this.dockerService.getContainerMetrics(id);
+  }
 }
