@@ -11,12 +11,14 @@ export const getNotes = async (): Promise<Note[]> => {
 }
 
 export const createNote = async (
+
+	user_id: int,
 	content: string
 ): Promise<Note> => {
 	const res = await axios.post(`${API}/notes`, {
+		user_id,
 		content,
 	})
-
 	return res.data
 }
 
