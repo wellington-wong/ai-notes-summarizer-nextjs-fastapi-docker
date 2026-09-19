@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "fastapi": "../backend/venv/bin/python3 -m uvicorn --app-dir ../backend/app main:app --reload",
-    "dev": "next dev -H 0.0.0.0",
+    "fastapi": "../backend/venv/bin/python3 -m uvicorn --app-dir ../backend app.main:app --reload",
+    "dev": "next dev",
+    "devcon": "concurrently \"next dev\" \"npm run fastapi\"",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

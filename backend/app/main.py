@@ -37,7 +37,7 @@ def root():
 @app.get("/notes")
 def get_notes():
 	db: Session = SessionLocal()
-
+	#return [{ "id": 1, "content": str("test"), "summary": str("test summary") }]
 	notes = db.query(Note).all()
 
 	db.close()
@@ -51,6 +51,8 @@ def create_note(note: NoteCreate):
 	db: Session = SessionLocal()
 
 	db_note = Note(
+
+
 		content=note.content
 	)
 

@@ -4,6 +4,7 @@ from pydantic import BaseModel, EmailStr, Field
 
 
 class NoteCreate(BaseModel):
+	user_id: int
 	content: str
 
 class NoteResponse(BaseModel):
