@@ -12,7 +12,7 @@ export const getNotes = async (): Promise<Note[]> => {
 
 export const createNote = async (
 
-	user_id: int,
+	user_id: number,
 	content: string
 ): Promise<Note> => {
 	const res = await axios.post(`${API}/notes`, {
