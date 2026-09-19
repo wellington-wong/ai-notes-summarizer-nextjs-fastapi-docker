@@ -15,7 +15,7 @@ export default function Home() {
   const [buttonText, setButtonText] = useState('Summarize with AI')
 
   const loadNotes = async () => {
-    const data = await getNotes()
+    const data = await getNotes();
     setNotes(data.reverse())
   }
 
@@ -25,7 +25,7 @@ export default function Home() {
 
   const handleCreate = async () => {
     if (!content.trim()) return
-    await createNote(content)
+    await createNote(1, content)
 
     setContent('')
     loadNotes()
