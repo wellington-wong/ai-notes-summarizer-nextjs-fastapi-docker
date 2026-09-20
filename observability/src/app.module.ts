@@ -18,6 +18,8 @@ import { validationSchema } from './config/validation.js';
 import { PrismaModule } from './prisma/prisma.module.js';
 import { SystemModule } from './system/system.module.js';
 import { DockerModule } from './docker/docker.module.js';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CollectorModule } from './collector/collector.module.js';
 
 export const { ObserveModule, ObserveInstrument } = createObserveModule();
 @Module({
@@ -34,17 +36,21 @@ export const { ObserveModule, ObserveInstrument } = createObserveModule();
       load: [configuration],
       validationSchema,
     }),
+    ScheduleModule.forRoot(),
     AuthModule,
     UsersModule,
     ProjectsModule,
     MonitorsModule,
     EventsModule,
+
+
     MetricsModule,
     AlertsModule,
     HealthModule,
     PrismaModule,
     SystemModule,
     DockerModule,
+    CollectorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

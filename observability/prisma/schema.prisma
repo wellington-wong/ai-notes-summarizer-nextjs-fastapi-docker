@@ -11,3 +11,31 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+
+model SystemMetric {
+
+    id                      Int         @id @default(autoincrement())
+    timestamp               DateTime    @default(now())
+    cpuUsagePercent         Float
+    memoryUsagePercent      Float
+    diskUsagePercent        Float
+    uptimeSeconds           Float
+
+    @@index([timestamp])
+
+}
+
+model ContainerMetric {
+    id                  Int         @id @default(autoincrement())
+    timestamp           DateTime    @default(now())
+    containerId         String
+
+
+    containerName       String
+    cpuUsagePercent     Float
+    memoryUsageBytes    Float
+    memoryLimitBytes    Float
+
+    @@index([containerId, timestamp])
+}

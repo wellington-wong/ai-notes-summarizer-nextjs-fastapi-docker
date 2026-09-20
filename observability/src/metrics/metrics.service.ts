@@ -1,0 +1,58 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service.js';
+
+
+@Injectable()
+export class MetricsService {
+  constructor(private readonly prisma: PrismaService) {}
+
+  getLatestSystemMetrics() {
+    return this.prisma.systemMetric.findFirst({
+      orderBy: {
+        timestamp: 'desc',
+      },
+
+    });
+  }
+
+  getSystemMetrics(minutes = 60) {
+    const since = new Date(Date.now() - minutes * 60 * 1000);
+
+    return this.prisma.systemMetric.findMany({
+      where: {
+        timestamp: {
+          gte: since,
+
+        },
+      },
+      orderBy: {
+        timestamp: 'asc',
+      },
+    });
+  }
+
+
+
+  getContainerMetrics(containerId: string, minutes = 60) {
+    const since = new Date(
+      Date.now() - minutes * 60  * 1000,
+    );
+
+    return this.prisma.containerMetric.findMany({
+      where: {
+        containerId,
+
+        timestamp: {
+          gte: since,
+        },
+      },
+      orderBy: {
+        timestamp: 'asc',
+      },
+    });
+  }
+
+
+
+
+}

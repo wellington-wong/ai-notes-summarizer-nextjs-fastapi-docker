@@ -38,11 +38,11 @@ export class SystemMetricsService {
         totalBytes: totalMemory,
         freeBytes: freeMemory,
         usedBytes: usedMemory,
-        usagePercent: Number((usedMemory / totalMemory) * 100).toFixed(2),
+        usagePercent: Number(((usedMemory / totalMemory) * 100).toFixed(2)),
       },
 
       disk,
-      uptimeSeconss: os.uptime(),
+      uptimeSeconds: os.uptime(),
     };
   }
 

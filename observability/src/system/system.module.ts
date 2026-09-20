@@ -5,6 +5,7 @@ import { SystemMetricsService } from './system-metrics.service.js';
 
 @Module({
   controllers: [SystemController],
-  providers: [SystemService, SystemMetricsService]
+  providers: [SystemService, SystemMetricsService],
+  exports: [SystemMetricsService],
 })
 export class SystemModule {}
