@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query } from '@nestjs/common';
 import { MetricsService } from './metrics.service.js';
 
 
-
+import { MetricsQueryDto } from './dto/metrics-query.dto.js';
 @Controller('metrics')
 export class MetricsController {
   constructor(private readonly metricsService: MetricsService) {}
@@ -13,19 +13,20 @@ export class MetricsController {
   }
 
   @Get('system')
-  getSystemMetrics(@Query('minutes') minutes?: string) {
-    return this.metricsService.getSystemMetrics(minutes ? Number(minutes) : 60);
+  getSystemMetrics(@Query() query: MetricsQueryDto)
+  {
+    return this.metricsService.getSystemMetrics(query.minutes);
   }
 
   @Get('containers/:id')
   getContainerMetrics(
     @Param('id') id: string,
-    @Query('minutes') minutes?: string,
 
+    @Query() query: MetricsQueryDto,
     ) {
     return this.metricsService.getContainerMetrics(
       id,
-      minutes ? Number(minutes) : 60,
+      query.minutes,
     );
   }
 }

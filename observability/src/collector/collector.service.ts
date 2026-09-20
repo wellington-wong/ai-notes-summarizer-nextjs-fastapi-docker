@@ -4,6 +4,7 @@ import { DockerService } from '../docker/docker.service.js';
 
 import { SystemMetricsService } from '../system/system-metrics.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { HealthService } from '../health/health.service.js';
 @Injectable()
 export class CollectorService {
   private readonly logger = new Logger(CollectorService.name);
@@ -13,6 +14,7 @@ export class CollectorService {
     private readonly systemMetricsService: SystemMetricsService,
 
     private readonly prisma: PrismaService,
+    private readonly healthService: HealthService,
   ) {}
 
   @Cron('*/10 * * * * *')
