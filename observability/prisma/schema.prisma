@@ -39,3 +39,41 @@ model ContainerMetric {
 
     @@index([containerId, timestamp])
 }
+
+
+
+
+
+model Monitor {
+    id              Int         @id @default(autoincrement())
+    name            String
+    url             String
+    enabled         Boolean     @default(true)
+    createdAt       DateTime    @default(now())
+    updatedAt       DateTime    @updatedAt
+
+    healthChecks    HealthCheck[]
+
+    @@index([enabled])
+}
+
+model HealthCheck {
+    id              Int         @id @default(autoincrement())
+    monitorId       Int
+    timestamp       DateTime    @default(now())
+
+
+    healthy         Boolean
+    statusCode      Int?
+    responseTimeMs  Float
+    error           String?
+
+    monitor Monitor @relation(fields: [monitorId], references: [id], onDelete: Cascade)
+
+
+
+
+
+
+    @@index([monitorId, timestamp])
+}

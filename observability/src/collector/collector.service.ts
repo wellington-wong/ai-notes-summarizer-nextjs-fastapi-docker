@@ -5,6 +5,7 @@ import { DockerService } from '../docker/docker.service.js';
 import { SystemMetricsService } from '../system/system-metrics.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { HealthService } from '../health/health.service.js';
+import { MonitorsService } from '../monitors/monitors.service.js';
 @Injectable()
 export class CollectorService {
   private readonly logger = new Logger(CollectorService.name);
@@ -15,6 +16,7 @@ export class CollectorService {
 
     private readonly prisma: PrismaService,
     private readonly healthService: HealthService,
+    private readonly monitorsService: MonitorsService,
   ) {}
 
   @Cron('*/10 * * * * *')
@@ -60,7 +62,24 @@ export class CollectorService {
       containerMetrics.push(metrics);
     }
 
+
+    const monitors = await this.monitorsService.getEnabledMonitors();
+    for (const monitor of monitors) {
+      const result = await this.healthService.check(
+        monitor.url,
+      )
+
+      this.logger.debug(`Health check: ${monitor.name} - ${result.healthy}`,);
+
+
+      await this.monitorsService.createHealthCheck(
+        monitor.id,
+        result,
+      );
+    }
+
     this.logger.log(
+
       JSON.stringify({
         system: systemMetrics,
         containers: containerMetrics,

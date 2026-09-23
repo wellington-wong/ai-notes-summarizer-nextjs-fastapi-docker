@@ -7,8 +7,11 @@ import { DockerModule } from '../docker/docker.module.js';
 import { SystemModule } from '../system/system.module.js';
 import { HealthModule } from '../health/health.module.js';
 
+import { MonitorsModule } from '../monitors/monitors.module.js';
+
 @Module({
-  imports: [SystemModule, DockerModule, HealthModule],
+  imports: [SystemModule, DockerModule, HealthModule,
+  MonitorsModule],
   providers: [CollectorService],
 })
 export class CollectorModule {}
