@@ -16,9 +16,9 @@ import {
 
 type SystemMetric = {
     timestamp: string;
-    cpuUsage: number;
-    memoryUsage: number;
-    diskUsage: number;
+    cpuUsagePercent: number;
+    memoryUsagePercent: number;
+    diskUsagePercent: number;
 }
 
 
