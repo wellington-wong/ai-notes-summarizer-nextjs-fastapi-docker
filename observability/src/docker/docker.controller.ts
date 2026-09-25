@@ -17,6 +17,13 @@ export class DockerController {
     return this.dockerService.getContainerStats(id);
   }
 
+  @Get('containers/metrics')
+  getAllContainerMetrics() {
+    return this.dockerService.getAllContainerMetrics();
+
+
+  }
+
   @Get('containers/:id/metrics')
   getContainerMetrics(@Param('id') id: string) {
     return this.dockerService.getContainerMetrics(id);

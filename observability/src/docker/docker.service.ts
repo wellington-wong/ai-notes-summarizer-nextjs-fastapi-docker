@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import Docker from 'dockerode';
 
 
 @Injectable()
 export class DockerService {
   private readonly docker: Docker;
+  private readonly logger = new Logger(DockerService.name);
 
   constructor() {
     this.docker = new Docker({
@@ -88,5 +89,55 @@ export class DockerService {
         usagePercent: memoryUsagePercent,
       },
     };
+  }
+
+
+
+
+
+
+
+
+
+  async getAllContainerMetrics() {
+    const containers = await this.getContainers();
+
+
+    return Promise.all(
+        containers.map(async (container) => {
+          if (container.state !== 'running') {
+            return {
+              ...container,
+              metrics: null,
+            };
+
+
+          }
+
+          try {
+            const metrics = await this.getContainerMetrics(
+                container.id,
+            );
+
+            return {
+
+
+              ...container,
+              metrics,
+            };
+          } catch (error) {
+            this.logger.warn(
+                `Failed to get metrics for ${container.name}`,
+            );
+
+
+            return {
+              ...container,
+              metrics: null,
+            };
+          }
+        }),
+    );
+
   }
 }
