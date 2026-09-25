@@ -4,8 +4,8 @@
 
 
 type ContainerMetrics = {
-    cpuUsage: number;
-    memoryUsage: number;
+    cpu: number;
+    memory: number;
 }
 
 type Container = {
