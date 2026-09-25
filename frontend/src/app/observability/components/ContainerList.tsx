@@ -3,6 +3,23 @@
 'use client';
 
 
+type ContainerMetrics = {
+    cpuUsage: number;
+    memoryUsage: number;
+}
+
+type Container = {
+    id: string;
+
+
+
+
+    name: string;
+    image: string;
+    state: string;
+    status: string;
+    metrics: ContainerMetrics | null;
+}
 
 
 type ContainerListProps = {
