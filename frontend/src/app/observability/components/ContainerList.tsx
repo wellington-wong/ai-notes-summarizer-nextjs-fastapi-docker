@@ -3,60 +3,17 @@
 'use client';
 
 
-import { useEffect, useState } from 'react';
-
-type Container = {
-    id: string;
-    name: string;
-    image: string;
-    state: string;
 
 
-    status: string;
-}
+type ContainerListProps = {
+    containers: Container[];
+};
+
+export default function ContainerList({
 
 
-
-export default function ContainerList() {
-
-    const [containers, setContainers] = useState<Container[]>([]);
-
-
-
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function fetchContainers() {
-            try {
-                const response = await fetch(
-                    'http://localhost:3000/docker/containers',
-                );
-
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch containers');
-                }
-
-
-                const data = await response.json();
-
-
-
-
-                setContainers(data);
-            } catch (error) {
-                console.error('Failed to fetch containers:', error);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-
-
-
-
-        fetchContainers();
-    }, []);
+                                          containers,
+                                      }: ContainerListProps) {
 
 
     return (
@@ -79,22 +36,20 @@ export default function ContainerList() {
             </div>
 
 
-            {loading ? (
-                <p className="text-sm text-gray-500">
-
-                    Loading containers...
-                </p>
-            ) : (
                 <div className="overflow-x-auto">
                     <table className="w-full text-left text-sm">
                         <thead>
-                            <tr className="border-b">
-                                <th className="pb-3">Container</th>
-                                <th className="pb-3">Image</th>
+                        <tr className="border-b">
+                            <th className="pb-3">Container</th>
 
-                                <th className="pb-3">State</th>
-                                <th className="pb-3">Status</th>
-                            </tr>
+                            <th className="pb-3">State</th>
+                            <th className="pb-3">CPU</th>
+
+
+
+                            <th className="pb-3">Memory</th>
+                            <th className="pb-3">Status</th>
+                        </tr>
                         </thead>
 
                         <tbody>
@@ -109,12 +64,7 @@ export default function ContainerList() {
                                     {container.name}
                                 </td>
 
-                                <td className="py-4 text-gray-500">
 
-
-
-                                    {container.image}
-                                </td>
 
 
                                 <td className="py-4">
@@ -131,8 +81,24 @@ export default function ContainerList() {
                                     </span>
                                 </td>
 
+                                <td className="py-4">
+                                    {container.metrics
+                                        ? `${container.metrics.cpu.usagePercent.toFixed(1)}%`
+                                        : '—'}
 
 
+                                </td>
+
+                                <td className="py-4">
+                                    {container.metrics
+                                        ? `${(
+                                            container.metrics.memory.usagePercent /
+                                            1024 /
+                                            1024
+
+                                        ).toFixed(1)} MB`
+                                        : '—'}
+                                </td>
 
                                 <td className="py-4 text-gray-500">
                                     {container.status}
@@ -153,7 +119,6 @@ export default function ContainerList() {
 
 
 
-            )}
 
         </section>
     );

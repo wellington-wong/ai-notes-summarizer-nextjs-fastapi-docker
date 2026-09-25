@@ -34,7 +34,7 @@ export default function SystemMetricsChart({
 
         ...metric,
         time: new Date(metric.timestamp).toLocaleTimeString(),
-    }));console.log(chartData);
+    }));
 
     return (
         <div className="rounded-xl border p-6">
