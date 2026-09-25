@@ -15,6 +15,20 @@ type SystemMetric = {
     diskUsagePercent: number;
 };
 
+type ContainerMetrics = {
+    cpu: { usagePercent: number; }
+    memory: { usagePercent: number; }
+}
+
+type Container = {
+    id: string;
+    name: string;
+    image: string;
+    state: string;
+    status: string;
+
+    metrics: ContainerMetrics | null;
+}
 
 export default function ObservabilityPage() {
     const [metrics, setMetrics] = useState<SystemMetric[]>([]);
