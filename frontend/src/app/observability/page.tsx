@@ -9,27 +9,11 @@ import ContainerList from './components/ContainerList';
 
 type SystemMetric = {
     timestamp: string;
-    cpuUsage: number;
-    memoryUsage: number;
+    cpuUsagePercent: number;
+    memoryUsagePercent: number;
 
-    diskUsage: number;
+    diskUsagePercent: number;
 };
-
-type ContainerMetrics = {
-    cpuUsage: number;
-    memoryUsage: number;
-}
-
-type Container = {
-
-    id: string;
-    name: string;
-    image: string;
-    state: string;
-    status: string;
-    metrics: ContainerMetrics | null;
-
-}
 
 
 export default function ObservabilityPage() {
