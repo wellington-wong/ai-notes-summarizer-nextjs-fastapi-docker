@@ -6,6 +6,7 @@
     "fastapi": "../backend/venv/bin/python3 -m uvicorn --app-dir ../backend app.main:app --reload",
     "dev": "next dev",
     "devcon": "concurrently \"next dev\" \"npm run fastapi\"",
+    "devobs": "concurrently \"npm run dev -- -p 3001\" \"npm run start:dev --prefix ../observability\"",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -15,7 +16,8 @@
     "concurrently": "^9.2.1",
     "next": "16.2.6",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.0",
