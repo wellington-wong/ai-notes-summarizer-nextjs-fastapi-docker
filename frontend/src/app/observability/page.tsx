@@ -15,34 +15,78 @@ type SystemMetric = {
     diskUsage: number;
 };
 
+type ContainerMetrics = {
+    cpuUsage: number;
+    memoryUsage: number;
+}
+
+type Container = {
+
+    id: string;
+    name: string;
+    image: string;
+    state: string;
+    status: string;
+    metrics: ContainerMetrics | null;
+
+}
+
+
 export default function ObservabilityPage() {
     const [metrics, setMetrics] = useState<SystemMetric[]>([]);
 
+    const [ containers, setContainers ] = useState<Container[]>([]);
+
+
     useEffect(() => {
-        async function fetchMetrics() {
-            const response = await fetch(
+        async function fetchDashboardData() {
+            try {
 
 
-                'http://localhost:3000/metrics/system',
-            );
+                const [systemResponse, dockerResponse] =
+                    await Promise.all([
+                        fetch('http://localhost:3000/metrics/system'),
+                        fetch('http://localhost:3000/docker/containers/metrics'),
+                    ]);
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch system metrics');
+
+                if (!systemResponse.ok) {
+                    throw new Error('Failed to fetch system metrics');
+                }
+
+                if (!dockerResponse.ok) {
+                    throw new Error('Failed to fetch Docker metrics');
+                }
+
+                const [systemData, dockerData] =
+
+                    await Promise.all([
+                        systemResponse.json(),
+                        dockerResponse.json(),
+                    ]);
+
+                setMetrics(systemData);
+                setContainers(dockerData);
+            } catch (error) {
+                console.error(
+                    'Failed to fetch dashboard data:',
+
+                    error,
+                );
             }
-
-            const data = await response.json();
-
-
-
-            setMetrics(data);
         }
 
-        fetchMetrics();
+
+        fetchDashboardData();
+
+        const interval = setInterval(
+            fetchDashboardData,
+            10000,
+        );
+
+
+        return () => clearInterval(interval);
     }, []);
-
-
-
-
 
 
     const latest = metrics.at(-1);
@@ -93,7 +137,7 @@ export default function ObservabilityPage() {
 
 
 
-                <ContainerList />
+                <ContainerList containers={containers} />
 
             </div>
         </main>
