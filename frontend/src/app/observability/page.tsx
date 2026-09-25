@@ -5,13 +5,14 @@ import MetricCard from './components/MetricCard';
 
 import { useEffect, useState } from 'react';
 import SystemMetricsChart from './components/SystemMetricsChart';
+import ContainerList from './components/ContainerList';
 
 type SystemMetric = {
     timestamp: string;
     cpuUsage: number;
     memoryUsage: number;
-    diskUsage: number;
 
+    diskUsage: number;
 };
 
 export default function ObservabilityPage() {
@@ -89,6 +90,10 @@ export default function ObservabilityPage() {
                 <section className="mt-6">
                     <SystemMetricsChart data={metrics} />
                 </section>
+
+
+
+                <ContainerList />
 
             </div>
         </main>
