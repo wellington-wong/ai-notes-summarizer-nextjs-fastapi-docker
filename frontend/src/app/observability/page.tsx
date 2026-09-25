@@ -43,8 +43,8 @@ export default function ObservabilityPage() {
 
                 const [systemResponse, dockerResponse] =
                     await Promise.all([
-                        fetch('http://localhost:3000/metrics/system'),
-                        fetch('http://localhost:3000/docker/containers/metrics'),
+                        fetch(`${process.env.NEXT_PUBLIC_API_OBSERVABILITY}/metrics/system`),
+                        fetch(`${process.env.NEXT_PUBLIC_API_OBSERVABILITY}/docker/containers/metrics`),
                     ]);
 
 
