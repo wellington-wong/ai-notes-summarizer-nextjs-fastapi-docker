@@ -68,7 +68,7 @@ Built with **Vercel, Node.js/NestJS, PostgreSQL, Docker, and GitHub Actions**.
 | Layer            | Technology              |
 | ---------------- | ----------------------- |
 | Frontend         | Vercel                  |
-| Backend          | Node.js + NestJS        |
+| Observability    | Node.js + NestJS        |
 | Database         | PostgreSQL              |
 | Infrastructure   | VPS + Docker            |
 | Containerization | Docker / Docker Compose |
@@ -95,17 +95,7 @@ Built with **Vercel, Node.js/NestJS, PostgreSQL, Docker, and GitHub Actions**.
 * CPU and memory usage
 * Network statistics
 * Container uptime
-* Restart count
 * Last heartbeat
-
-Example health states:
-
-```text
-🟢 HEALTHY    Operating normally
-🟡 WARNING    Threshold exceeded
-🔴 CRITICAL   Service unavailable / critical issue
-⚪ UNKNOWN    No recent heartbeat
-```
 
 ---
 
@@ -114,18 +104,15 @@ Example health states:
 ```text
 .
 ├── frontend/                # Dashboard
-├── backend/                 # NestJS API
+├── observability/                 # NestJS API
 │   └── src/
 │       ├── health/
 │       ├── metrics/
 │       ├── containers/
 │       └── monitoring/
-├── agent/                   # VPS monitoring agent
-├── docker/
 ├── .github/
 │   └── workflows/
-│       ├── ci.yml
-│       └── cd.yml
+│       ├── deploy-observability.yml
 ├── docker-compose.yml
 ├── .env.example
 └── README.md
@@ -141,13 +128,6 @@ Example health states:
 * Docker & Docker Compose
 * PostgreSQL
 * Git
-
-### Clone
-
-```bash
-git clone https://github.com/<org>/<repository>.git
-cd <repository>
-```
 
 ### Configure
 
@@ -208,19 +188,8 @@ docker compose down
 Example endpoints:
 
 ```text
-GET  /api/health
-GET  /api/servers
-GET  /api/servers/:id/metrics
-
-GET  /api/containers
-GET  /api/containers/:id
-GET  /api/containers/:id/metrics
-
-GET  /api/metrics/cpu
-GET  /api/metrics/memory
-GET  /api/metrics/disk
-
-WS   /api/realtime
+GET  /system/metrics
+GET  /docker/containers/metrics
 ```
 
 The monitoring agent collects VPS and Docker metrics, sends them to the NestJS backend, and the backend persists relevant data in PostgreSQL while streaming live updates to connected clients.
@@ -254,59 +223,3 @@ Push / Pull Request
 ```
 
 The frontend is deployed through **Vercel**, while the containerized backend and monitoring services can be deployed to the VPS.
-
----
-
-## 🔐 Security
-
-Recommended production practices:
-
-* HTTPS for all external traffic
-* Environment-based secrets
-* Authentication for dashboard/API access
-* Firewall-restricted VPS
-* No public Docker socket
-* Least-privilege credentials
-* Regular OS and Docker updates
-
----
-
-## 🗺️ Roadmap
-
-* [x] VPS monitoring
-* [x] Docker monitoring
-* [x] Dockerized deployment
-* [x] PostgreSQL persistence
-* [x] GitHub Actions CI/CD
-* [ ] Real-time WebSocket metrics
-* [ ] Authentication & RBAC
-* [ ] Configurable alerts
-* [ ] Email / webhook notifications
-* [ ] Multi-VPS support
-* [ ] Historical metric charts
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository.
-2. Create a feature branch.
-3. Make your changes.
-4. Run tests and linting.
-5. Open a Pull Request.
-
-```bash
-git checkout -b feature/my-feature
-npm test
-npm run lint
-git commit -m "feat: add container monitoring"
-git push origin feature/my-feature
-```
-
-## 📄 License
-
-MIT License. See [`LICENSE`](LICENSE).
-
----
-
-**Monitor infrastructure. Detect problems early. Keep services healthy.**
