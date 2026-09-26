@@ -45,6 +45,7 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+          cache-dependency-path: observability/package-lock.json
 
       - name: Install dependencies
 
