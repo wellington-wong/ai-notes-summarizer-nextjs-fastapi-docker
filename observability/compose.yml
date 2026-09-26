@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:16
+
+
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: observability
+      POSTGRES_USER: observability
+      POSTGRES_PASSWORD: observability
+
+    volumes:
+
+
+
+
+      - observability-postgres:/var/lib/postgresql/data
+
+  api:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
+
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DATABASE_URL: postgresql://observability:${POSTGRES_PASSWORD}@postgres:5432/observability
+
+      JWT_SECRET: 25dc913a99a779f819d29d9e2947d71027ddf018190588997a7274593d6b7880
+
+      JWT_REFRESH_SECRET: 1655fd1f10c9f6f0b5e81c9c0185ef69c7cbf50f889b016992a959049780b8a7
+
+
+    ports:
+
+      - "3000:3000"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
+
+
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/host/root:ro
+
+
+
+
+
+
+volumes:
+  observability-postgres:
