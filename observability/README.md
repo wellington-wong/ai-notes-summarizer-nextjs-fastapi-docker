@@ -1,114 +1,312 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# VPS & Docker Monitoring Dashboard
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A real-time infrastructure monitoring dashboard for tracking the **health, performance, and availability of VPS servers and Docker containers** from a single interface.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Built with **Vercel, Node.js/NestJS, PostgreSQL, Docker, and GitHub Actions**.
 
-## Description
+## ✨ Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+* 📊 **VPS monitoring** — CPU, memory, disk, network, uptime, and load
+* 🐳 **Docker monitoring** — container status, health, CPU, memory, uptime, and restarts
+* ⚡ **Real-time updates** — live infrastructure and container metrics
+* ❤️ **Health monitoring** — VPS, Docker, container, and service health
+* 📈 **Historical metrics** — store and visualize infrastructure data
+* 🔐 **API & authentication-ready backend**
+* 🐳 **Fully Dockerized**
+* 🚀 **GitHub Actions CI/CD**
+* ☁️ **Vercel frontend deployment**
 
-## Project setup
+---
 
-```bash
-$ npm install
+## 🏗️ Architecture
+
+```text
+                         ┌─────────────────┐
+                         │     Browser     │
+                         │   Dashboard UI  │
+                         └────────┬────────┘
+                                  │
+                                  ▼
+                         ┌─────────────────┐
+                         │     Vercel      │
+                         │    Frontend     │
+                         └────────┬────────┘
+                                  │
+                           REST / WebSocket
+                                  │
+                                  ▼
+                         ┌─────────────────┐
+                         │ Node.js/NestJS  │
+                         │    Backend      │
+                         └───────┬─┬───────┘
+                                 │ │
+                    ┌────────────┘ └────────────┐
+                    ▼                           ▼
+             ┌──────────────┐          ┌────────────────┐
+             │  PostgreSQL  │          │ Monitoring     │
+             │ Metrics/Data │          │ Agent          │
+             └──────────────┘          └───────┬────────┘
+                                               │
+                                               ▼
+                                      ┌────────────────┐
+                                      │      VPS       │
+                                      │ CPU/RAM/Disk   │
+                                      │ Network/Uptime │
+                                      └───────┬────────┘
+                                              │
+                                              ▼
+                                      ┌────────────────┐
+                                      │ Docker Engine  │
+                                      │ ┌────┐ ┌────┐  │
+                                      │ │ C1 │ │ C2 │  │
+                                      │ └────┘ └────┘  │
+                                      └────────────────┘
 ```
 
-## Compile and run the project
+## 🧰 Tech Stack
 
-```bash
-# development
-$ npm run start
+| Layer            | Technology              |
+| ---------------- | ----------------------- |
+| Frontend         | Vercel                  |
+| Backend          | Node.js + NestJS        |
+| Database         | PostgreSQL              |
+| Infrastructure   | VPS + Docker            |
+| Containerization | Docker / Docker Compose |
+| CI/CD            | GitHub Actions          |
+| Communication    | REST + WebSocket        |
 
-# watch mode
-$ npm run start:dev
+---
 
-# production mode
-$ npm run start:prod
+## 📈 Monitored Metrics
+
+### VPS
+
+* CPU utilization and load
+* Memory usage
+* Disk usage
+* Network traffic
+* System uptime
+* Host availability
+
+### Docker Containers
+
+* Running / stopped state
+* Health status
+* CPU and memory usage
+* Network statistics
+* Container uptime
+* Restart count
+* Last heartbeat
+
+Example health states:
+
+```text
+🟢 HEALTHY    Operating normally
+🟡 WARNING    Threshold exceeded
+🔴 CRITICAL   Service unavailable / critical issue
+⚪ UNKNOWN    No recent heartbeat
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+## 📁 Project Structure
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```text
+.
+├── frontend/                # Dashboard
+├── backend/                 # NestJS API
+│   └── src/
+│       ├── health/
+│       ├── metrics/
+│       ├── containers/
+│       └── monitoring/
+├── agent/                   # VPS monitoring agent
+├── docker/
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       └── cd.yml
+├── docker-compose.yml
+├── .env.example
+└── README.md
 ```
 
-## Deployment
+---
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## 🚀 Getting Started
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Requirements
+
+* Node.js
+* Docker & Docker Compose
+* PostgreSQL
+* Git
+
+### Clone
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+git clone https://github.com/<org>/<repository>.git
+cd <repository>
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Configure
 
-## Observability
+```bash
+cp .env.example .env
+```
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+Example:
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+```env
+NODE_ENV=development
+PORT=3000
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+DATABASE_HOST=postgres
+DATABASE_PORT=5432
+DATABASE_NAME=monitoring
+DATABASE_USER=postgres
+DATABASE_PASSWORD=change-me
 
-## Resources
+JWT_SECRET=change-me
+MONITORING_INTERVAL=5000
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+> Never commit production secrets or credentials to Git.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observer](https://observer.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+## 🐳 Run with Docker
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Start the complete environment:
 
-## Stay in touch
+```bash
+docker compose up -d
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+View services:
 
-## License
+```bash
+docker compose ps
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+View logs:
+
+```bash
+docker compose logs -f
+```
+
+Stop:
+
+```bash
+docker compose down
+```
+
+---
+
+## 🔌 API
+
+Example endpoints:
+
+```text
+GET  /api/health
+GET  /api/servers
+GET  /api/servers/:id/metrics
+
+GET  /api/containers
+GET  /api/containers/:id
+GET  /api/containers/:id/metrics
+
+GET  /api/metrics/cpu
+GET  /api/metrics/memory
+GET  /api/metrics/disk
+
+WS   /api/realtime
+```
+
+The monitoring agent collects VPS and Docker metrics, sends them to the NestJS backend, and the backend persists relevant data in PostgreSQL while streaming live updates to connected clients.
+
+---
+
+## 🔄 CI/CD
+
+GitHub Actions automates testing, building, and deployment.
+
+```text
+Push / Pull Request
+        │
+        ▼
+   Install & Lint
+        │
+        ▼
+      Tests
+        │
+        ▼
+      Build
+        │
+        ▼
+ Docker Image Build
+        │
+        ▼
+     Deploy
+        │
+        ▼
+   Health Check
+```
+
+The frontend is deployed through **Vercel**, while the containerized backend and monitoring services can be deployed to the VPS.
+
+---
+
+## 🔐 Security
+
+Recommended production practices:
+
+* HTTPS for all external traffic
+* Environment-based secrets
+* Authentication for dashboard/API access
+* Firewall-restricted VPS
+* No public Docker socket
+* Least-privilege credentials
+* Regular OS and Docker updates
+
+---
+
+## 🗺️ Roadmap
+
+* [x] VPS monitoring
+* [x] Docker monitoring
+* [x] Dockerized deployment
+* [x] PostgreSQL persistence
+* [x] GitHub Actions CI/CD
+* [ ] Real-time WebSocket metrics
+* [ ] Authentication & RBAC
+* [ ] Configurable alerts
+* [ ] Email / webhook notifications
+* [ ] Multi-VPS support
+* [ ] Historical metric charts
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Make your changes.
+4. Run tests and linting.
+5. Open a Pull Request.
+
+```bash
+git checkout -b feature/my-feature
+npm test
+npm run lint
+git commit -m "feat: add container monitoring"
+git push origin feature/my-feature
+```
+
+## 📄 License
+
+MIT License. See [`LICENSE`](LICENSE).
+
+---
+
+**Monitor infrastructure. Detect problems early. Keep services healthy.**
