@@ -86,6 +86,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Debug repository
+        run: |
+          pwd
+          ls -la
+          ls -la observability
 
       - name: Build image
 
