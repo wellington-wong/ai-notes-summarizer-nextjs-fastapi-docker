@@ -3,6 +3,7 @@
 A real-time infrastructure monitoring dashboard for tracking the **health, performance, and availability of VPS servers and Docker containers** from a single interface.
 
 Built with **Vercel, Node.js/NestJS, PostgreSQL, Docker, and GitHub Actions**.
+[Live Preview](https://monitoring.wellington.codes)
 
 ## ✨ Features
 
