@@ -147,10 +147,6 @@ jobs:
 
             echo "${{ secrets.GHCR_TOKEN }}" | \
               docker login ghcr.io \
-
-
-
-
               --username "${{ secrets.GHCR_USER }}" \
               --password-stdin
 
