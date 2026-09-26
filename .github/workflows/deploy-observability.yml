@@ -97,7 +97,7 @@ jobs:
           docker build \
             -t $IMAGE_NAME:${{ github.sha }} \
             -t $IMAGE_NAME:latest \
-            .
+            ./observability
 
 
 
