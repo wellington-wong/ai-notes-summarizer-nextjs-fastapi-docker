@@ -75,8 +75,6 @@ Built with **Vercel, Node.js/NestJS, PostgreSQL, Docker, and GitHub Actions**.
 | Infrastructure   | VPS + Docker            |
 | Containerization | Docker / Docker Compose |
 | CI/CD            | GitHub Actions          |
-| Communication    | REST + WebSocket        |
-
 ---
 
 ## 📈 Monitored Metrics
