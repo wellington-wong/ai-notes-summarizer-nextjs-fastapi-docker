@@ -109,7 +109,7 @@ export default function ContainerList({
                                 <td className="py-4">
                                     {container.metrics
                                         ? `${(
-                                            container.metrics.memory.usagePercent /
+                                            container.metrics.memory.usageBytes /
                                             1024 /
                                             1024
 
