@@ -17,7 +17,7 @@ type SystemMetric = {
 
 type ContainerMetrics = {
     cpu: { usagePercent: number; }
-    memory: { usagePercent: number; }
+    memory: { usageBytes: number; }
 }
 
 type Container = {
