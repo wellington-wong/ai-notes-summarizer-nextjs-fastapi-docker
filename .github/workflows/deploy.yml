@@ -6,8 +6,12 @@ on:
     branches:
       - master
 
+    paths:
+      - 'backend/**'
+
 concurrency:
   group: production-deploy
+
   cancel-in-progress: true
 
 jobs:

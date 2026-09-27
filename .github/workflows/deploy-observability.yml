@@ -9,8 +9,11 @@ on:
     branches:
       - master
 
-permissions:
+    paths:
+      - 'observability/**'
 
+
+permissions:
 
   contents: read
   packages: write
