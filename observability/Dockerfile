@@ -40,8 +40,7 @@ COPY --from=builder /app/prisma7.config.ts ./prisma7.config.ts
 
 COPY --from=builder /app/src/generated ./src/generated
 
+
+
 EXPOSE 3000
-
-
-
 CMD ["node", "dist/main.js"]
