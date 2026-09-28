@@ -11,12 +11,37 @@ services:
         DATABASE_URL: postgresql+psycopg2://postgres:${POSTGRES_PASSWORD}@db:5432/notesdb
         OPENAI_API_KEY: ${OPENAI_API_KEY}
       depends_on:
+          
         db:
           condition: service_healthy
+
+
+    app2:
+      build: ./backend
+      restart: unless-stopped
+
+      ports:
+
+        - "8001:8000"
+      volumes:
+        - ./app2/app:/app/app
+
+      environment:
+        DATABASE_URL: postgresql+psycopg2://postgres:${POSTGRES_PASSWORD}@db:5432/agentdb
+        OPENAI_API_KEY: ${OPENAI_API_KEY}
+        PROJECT_NAME: "AI Agent Tools Core"
+
+
+
+      depends_on:
+        db:
+          condition: service_healthy
+
 
     db:
       image: postgres:16
       restart: unless-stopped
+        
       environment:
         POSTGRES_USER: postgres
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
