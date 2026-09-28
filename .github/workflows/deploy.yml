@@ -45,7 +45,7 @@ jobs:
 
         run: |
           ssh -i ~/.ssh/id_ed25519 ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            cd ~/apps/notes-app
+            cd ~/apps/notes-app/backend
 
 
             printf "OPENAI_API_KEY=%s\nPOSTGRES_PASSWORD=%s\n" \
@@ -54,11 +54,11 @@ jobs:
 
             chmod 600 .env
 
-            docker compose -f docker-compose.prod.yml up -d --build backend
+            docker compose -f ../docker-compose.prod.yml up -d --build backend app2
           
             sleep 5
 
-            docker compose -f docker-compose.prod.yml exec -T backend \
+            docker compose -f ../docker-compose.prod.yml exec -T backend \
             python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
           EOF
 
