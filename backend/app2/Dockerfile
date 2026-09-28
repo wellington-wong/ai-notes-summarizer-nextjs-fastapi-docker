@@ -5,6 +5,7 @@ WORKDIR /app
 COPY package.json bun.lock /app/
 COPY frontend/package.json /app/frontend/
 
+
 WORKDIR /app/frontend
 
 RUN bun install
