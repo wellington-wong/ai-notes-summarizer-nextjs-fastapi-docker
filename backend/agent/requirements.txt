@@ -14,4 +14,4 @@ sentry-sdk
 
 
 sqlmodel
-jwt
+PyJWT
