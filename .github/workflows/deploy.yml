@@ -37,9 +37,11 @@ jobs:
             --exclude '.git' \
             --exclude '.github' \
             --exclude 'frontend' \
-            --exclude 'node_modules' \
+            --exclude 'observability' \
             -e "ssh -i ~/.ssh/id_ed25519" \
             ./ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:~/apps/notes-app
+
+
 
       - name: Deploy with Docker Compose
 
