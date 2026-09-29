@@ -8,3 +8,5 @@ openai
 
 argon2-cffi
 email-validator
+
+sentry-sdk
