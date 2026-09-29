@@ -17,3 +17,5 @@ sqlmodel
 PyJWT
 
 pwdlib
+
+pwdlib[bcrypt]
