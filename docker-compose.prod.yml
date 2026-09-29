@@ -29,6 +29,13 @@ services:
         OPENAI_API_KEY: ${OPENAI_API_KEY}
         PROJECT_NAME: "AI Agent Tools Core"
 
+        SECRET_KEY: changethis
+
+
+        FIRST_SUPERUSER: admin@example.com
+
+        FIRST_SUPERUSER_PASSWORD: changethis
+
 
 
       depends_on:
