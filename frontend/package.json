@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "fastapi": "../backend/venv/bin/python3 -m uvicorn --app-dir ../backend app.main:app --reload",
+    "fastapi": "../backend/notes/venv/bin/python3 -m uvicorn --app-dir ../backend/notes app.main:app --reload",
     "dev": "next dev",
     "devcon": "concurrently \"next dev\" \"npm run fastapi\"",
     "devobs": "concurrently \"npm run dev -- -p 3001\" \"npm run start:dev --prefix ../observability\"",
