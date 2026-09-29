@@ -5,12 +5,13 @@ from pydantic import EmailStr
 from sqlalchemy import DateTime
 from sqlmodel import Field, Relationship, SQLModel
 
+from __future__ import annotations
 
 def get_datetime_utc() -> datetime:
     return datetime.now(UTC)
 
 
-# Shared properties
+
 class UserBase(SQLModel):
     email: EmailStr = Field(unique=True, index=True, max_length=255)
     is_active: bool = True
