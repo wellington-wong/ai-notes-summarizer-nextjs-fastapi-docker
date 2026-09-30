@@ -26,3 +26,6 @@ pwdlib[bcrypt]
 
 pydantic_settings
 emails
+
+jinja2
+
