@@ -43,13 +43,13 @@ export async function middleware(request: NextRequest) {
 
 
 
-  const hostname = req.headers.get('host') || ''
+  const hostname = request.headers.get('host') || ''
 
   if (hostname.startsWith('monitoring.')) {
 
 
 
-    if (req.nextUrl.pathname === '/observability') {
+    if (request.nextUrl.pathname === '/observability') {
       return res
     }
 
