@@ -8,8 +8,8 @@ export const revalidate = 3600;
 
 export default async function PricingPage() {
   const [prices, products] = await Promise.all([
-    getStripePrices(),
-    getStripeProducts(),
+    //getStripePrices(),
+    //getStripeProducts(),
   ]);
 
   const basePlan = products.find((product) => product.name === 'Base');
