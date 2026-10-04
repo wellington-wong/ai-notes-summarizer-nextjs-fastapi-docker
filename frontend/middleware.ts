@@ -40,9 +40,24 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+
+
+
+  const hostname = req.headers.get('host') || ''
+
+  if (hostname.startsWith('monitoring.')) {
+
+
+
+    if (req.nextUrl.pathname === '/observability') {
+      return res
+    }
+
+    return NextResponse.rewrite(new URL('/observability', req.url))
+  }
+
   return res;
 }
-
 export const config = {
   matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
   runtime: 'nodejs'
