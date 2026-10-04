@@ -22,7 +22,6 @@
     "clsx": "^2.1.1",
     "concurrently": "^10.0.5",
     "dotenv": "^16.5.0",
-    "drizzle-kit": "^0.18.1",
     "drizzle-orm": "^0.45.3",
     "jose": "^6.0.11",
     "lucide-react": "^0.511.0",
@@ -43,6 +42,7 @@
     "zod": "^3.24.4"
   },
   "devDependencies": {
-    "baseline-browser-mapping": "^2.11.27"
+    "baseline-browser-mapping": "^2.11.27",
+    "drizzle-kit": "^0.31.11"
   }
 }
