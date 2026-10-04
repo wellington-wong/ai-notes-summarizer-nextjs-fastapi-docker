@@ -12,11 +12,11 @@ export default async function PricingPage() {
     //getStripeProducts(),
   ]);
 
-  const basePlan = products.find((product) => product.name === 'Base');
-  const plusPlan = products.find((product) => product.name === 'Plus');
+  const basePlan = [];//products.find((product) => product.name === 'Base');
+  const plusPlan = [];//products.find((product) => product.name === 'Plus');
 
-  const basePrice = prices.find((price) => price.productId === basePlan?.id);
-  const plusPrice = prices.find((price) => price.productId === plusPlan?.id);
+  const basePrice = [];//prices.find((price) => price.productId === basePlan?.id);
+  const plusPrice = [];//prices.find((price) => price.productId === plusPlan?.id);
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
