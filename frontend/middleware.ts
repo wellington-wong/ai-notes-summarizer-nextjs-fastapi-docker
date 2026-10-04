@@ -53,7 +53,7 @@ export async function middleware(request: NextRequest) {
       return res
     }
 
-    return NextResponse.rewrite(new URL('/observability', req.url))
+    return NextResponse.rewrite(new URL('/observability', request.url))
   }
 
   return res;
