@@ -8,7 +8,7 @@ import {
   summarizeNote,
 } from './services/api'
 
-import { Note } from './types/note'
+import { Note } from '@/app/types/note'
 import './notes.css';
 export default function Home() {
   const [content, setContent] = useState<string>('')
