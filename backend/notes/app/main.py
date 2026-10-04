@@ -18,7 +18,7 @@ app = FastAPI()
 
 app.add_middleware(
 	CORSMiddleware,
-	allow_origins=["http://127.0.0.1:3000", "https://summarizer.wellington.codes"],
+	allow_origins=["http://localhost:3000", "https://summarizer.wellington.codes"],
 	allow_credentials=True,
 	allow_methods=["*"],
 	allow_headers=["*"],

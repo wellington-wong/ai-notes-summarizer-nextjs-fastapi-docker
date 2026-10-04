@@ -5,34 +5,26 @@ sqlalchemy
 psycopg2-binary
 python-dotenv
 openai
-
 argon2-cffi
 email-validator
-
 sentry-sdk
 
 
 
+
 sqlmodel
-
 PyJWT
-
 pwdlib
-
-
 pwdlib[bcrypt]
-
-
-
 pydantic_settings
 emails
-
 jinja2
 
-
-
-
-
-
 python-multipart
+
+
+langgraph
+langchain
+
+langchain-anthropic
 
