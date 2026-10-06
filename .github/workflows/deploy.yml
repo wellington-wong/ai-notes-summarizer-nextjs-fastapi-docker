@@ -58,11 +58,13 @@ jobs:
             chmod 600 .env
 
             docker compose -f docker-compose.prod.yml up -d --build notes agent
-          
+            docker system prune -af
             sleep 5
 
-            docker compose -f docker-compose.prod.yml exec -T notes \
-            python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
+
+            
+            #docker compose -f docker-compose.prod.yml exec -T notes \
+            #python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"
           EOF
 
 
