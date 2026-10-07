@@ -26,6 +26,24 @@
     margin: auto;
 }
 
+.container.notes .note-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    margin-bottom: 24px;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    background: #fafafa;
+}
+
+.container.notes .note-form label {
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
 .container.notes textarea,
 .container.notes input {
     width: 100%;

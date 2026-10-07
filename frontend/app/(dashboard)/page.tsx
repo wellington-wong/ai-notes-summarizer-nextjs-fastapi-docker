@@ -13,7 +13,7 @@ import './notes.css';
 export default function Home() {
   const [content, setContent] = useState<string>('')
   const [notes, setNotes] = useState<Note[]>([])
-  const [buttonText, setButtonText] = useState('Summarize with AI')
+  const [summarizingNoteId, setSummarizingNoteId] = useState<number | null>(null)
 
   const loadNotes = async () => {
     const data = await getNotes();
@@ -35,9 +35,13 @@ export default function Home() {
   const handleSummarize = async (
       id: number
   ) => {
-    setButtonText("Thinking...")
-    await summarizeNote(id)
-    loadNotes()
+    setSummarizingNoteId(id)
+    try {
+      await summarizeNote(id)
+      await loadNotes()
+    } finally {
+      setSummarizingNoteId(null)
+    }
   }
 
   return (
@@ -45,17 +49,25 @@ export default function Home() {
 
         <h1>AI Notes Summarizer</h1>
 
-        <textarea
+        <form
+          className="note-form"
+          onSubmit={(e) => {
+            e.preventDefault()
+            handleCreate()
+          }}
+        >
+          <label htmlFor="note-content">Your note</label>
+          <textarea
+            id="note-content"
             placeholder="Write your note..."
             value={content}
-            onChange={(e) => {
-              setContent(e.target.value)
-            }}
-        />
-
-        <button onClick={handleCreate}>
-          Save Note
-        </button>
+            onChange={(e) => setContent(e.target.value)}
+            required
+          />
+          <button type="submit" disabled={!content.trim()}>
+            Save Note
+          </button>
+        </form>
 
         {notes.map((note) => (
             <div className="note" key={note.id}>
@@ -74,7 +86,7 @@ export default function Home() {
                   handleSummarize(note.id)
               }
               >
-                {buttonText}
+                {summarizingNoteId === note.id ? 'Thinking...' : 'Summarize with AI'}
               </button>}
             </div>
         ))}
