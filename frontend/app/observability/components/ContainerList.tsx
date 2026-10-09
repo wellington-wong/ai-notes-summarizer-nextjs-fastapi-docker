@@ -6,6 +6,9 @@
 type ContainerMetrics = {
     cpu: {usagePercent: number;}
     memory: {usageBytes: number;}
+    network: {rxBytes: number; txBytes: number;}
+    blockIo: {readBytes: number; writeBytes: number;}
+    pids: {current: number; limit: number;}
 }
 
 type Container = {
@@ -25,6 +28,20 @@ type Container = {
 type ContainerListProps = {
     containers: Container[];
 };
+
+function formatNetworkBytes(bytes: number) {
+    const kilobytes = bytes / 1024;
+    return kilobytes > 1000
+        ? `${(kilobytes / 1024).toFixed(1)} MB`
+        : `${kilobytes.toFixed(1)} kB`;
+}
+
+function formatBlockIoBytes(bytes: number) {
+    const megabytes = bytes / 1024 / 1024;
+    return megabytes > 1000
+        ? `${(megabytes / 1024).toFixed(1)} GB`
+        : `${megabytes.toFixed(1)} MB`;
+}
 
 export default function ContainerList({
 
@@ -65,6 +82,9 @@ export default function ContainerList({
 
 
                             <th className="pb-3">Memory</th>
+                            <th className="pb-3">Net I/O</th>
+                            <th className="pb-3">Block I/O</th>
+                            <th className="pb-3">PIDS</th>
                             <th className="pb-3">Status</th>
                         </tr>
                         </thead>
@@ -114,6 +134,24 @@ export default function ContainerList({
                                             1024
 
                                         ).toFixed(1)} MB`
+                                        : '—'}
+                                </td>
+
+                                <td className="py-4">
+                                    {container.metrics
+                                        ? `${formatNetworkBytes(container.metrics.network.rxBytes)} / ${formatNetworkBytes(container.metrics.network.txBytes)}`
+                                        : '—'}
+                                </td>
+
+                                <td className="py-4">
+                                    {container.metrics
+                                        ? `${formatBlockIoBytes(container.metrics.blockIo.readBytes)} / ${formatBlockIoBytes(container.metrics.blockIo.writeBytes)}`
+                                        : '—'}
+                                </td>
+
+                                <td className="py-4">
+                                    {container.metrics
+                                        ? `${container.metrics.pids.current} / ${container.metrics.pids.limit}`
                                         : '—'}
                                 </td>
 

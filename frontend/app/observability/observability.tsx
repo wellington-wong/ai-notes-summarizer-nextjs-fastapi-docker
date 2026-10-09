@@ -18,6 +18,9 @@ type SystemMetric = {
 type ContainerMetrics = {
     cpu: { usagePercent: number; }
     memory: { usageBytes: number; }
+    network: { rxBytes: number; txBytes: number; }
+    blockIo: { readBytes: number; writeBytes: number; }
+    pids: { current: number; limit: number; }
 }
 
 type Container = {
