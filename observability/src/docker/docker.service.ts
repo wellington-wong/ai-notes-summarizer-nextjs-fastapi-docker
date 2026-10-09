@@ -77,6 +77,27 @@ export class DockerService {
         ? Number(((memoryUsage / memoryLimit) * 100).toFixed(2))
         : 0;
 
+    const network = Object.values(stats.networks ?? {}).reduce(
+      (totals, networkStats) => ({
+        rxBytes: totals.rxBytes + networkStats.rx_bytes,
+        txBytes: totals.txBytes + networkStats.tx_bytes,
+      }),
+      { rxBytes: 0, txBytes: 0 },
+    );
+
+    const blockIo = (stats.blkio_stats?.io_service_bytes_recursive ?? []).reduce(
+      (totals, entry) => {
+        if (entry.op.toLowerCase() === 'read') {
+          totals.readBytes += entry.value;
+        } else if (entry.op.toLowerCase() === 'write') {
+          totals.writeBytes += entry.value;
+        }
+
+        return totals;
+      },
+      { readBytes: 0, writeBytes: 0 },
+    );
+
     return {
       containerId: inspect.Id,
       name: inspect.Name.replace(/^\//, ''),
@@ -87,6 +108,12 @@ export class DockerService {
         usageBytes: memoryUsage,
         limitBytes: memoryLimit,
         usagePercent: memoryUsagePercent,
+      },
+      network,
+      blockIo,
+      pids: {
+        current: stats.pids_stats?.current ?? 0,
+        limit: stats.pids_stats?.limit ?? 0,
       },
     };
   }
